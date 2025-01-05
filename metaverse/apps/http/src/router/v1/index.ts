@@ -19,13 +19,13 @@ router.post("/signup",async (req, res) => {
     }
     const hashPassword = await bcrypt.hash(parseData.data.password,10)
     try{
-        // const existingUser = await client.user.findUnique({
-        //      where: { username:parseData.data.username } 
-        // });
-        // if (existingUser) {
-        //     res.status(400).json({ message: "User already exists" })
-        //     return;
-        // }
+        const existingUser = await client.user.findUnique({
+             where: { username:parseData.data.username } 
+        });
+        if (existingUser) {
+            res.status(400).json({ message: "User already exists" })
+            return;
+        }
         const user = await client.user.create({
             data:{
                 username:parseData.data.username,

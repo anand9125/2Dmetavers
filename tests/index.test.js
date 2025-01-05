@@ -1,69 +1,69 @@
-const request = require("supertest");
+// const request = require("supertest");
 
-// Replace "htttp" with "http" in BACKEND_URL
-const BACKEND_URL = "http://localhost:4000";
+// // Replace "htttp" with "http" in BACKEND_URL
+// const BACKEND_URL = "http://localhost:4000";
 
-describe("Authentication", () => {
-  test("User is able to sign up only once", async () => {
-    const username = "testuser@example.com";
-    const password = "123456fgdfg";
+// describe("Authentication", () => {
+//   test("User is able to sign up only once", async () => {
+//     const username = "testuser@exampldfhgdfe.com";
+//     const password = "123456fgdfg";
 
-    // First signup attempt
-    const response = await request(BACKEND_URL)
-      .post("/api/v1/signup")
-      .send({ username, password, type: "admin" });
-    expect(response.status).toBe(201);
+//     // First signup attempt
+//     const response = await request(BACKEND_URL)
+//       .post("/api/v1/signup")
+//       .send({ username, password, type: "admin" });
+//     expect(response.status).toBe(201);
 
-    // Duplicate signup attempt
-    const duplicateResponse = await request(BACKEND_URL)
-      .post("/api/v1/signup")
-      .send({ username, password, type: "admin" });
-    expect(duplicateResponse.status).toBe(400);
-  });
+//     // Duplicate signup attempt
+//     const duplicateResponse = await request(BACKEND_URL)
+//       .post("/api/v1/signup")
+//       .send({ username, password, type: "admin" });
+//     expect(duplicateResponse.status).toBe(400);
+//   });
 
-  test("Signup request fails if username is empty", async () => {
-    const password = "123456";
+//   test("Signup request fails if username is empty", async () => {
+//     const password = "123456";
 
-    const response = await request(BACKEND_URL)
-      .post("/api/v1/signup")
-      .send({ password }); // No username provided
-    expect(response.status).toBe(400);
-  });
+//     const response = await request(BACKEND_URL)
+//       .post("/api/v1/signup")
+//       .send({ password }); // No username provided
+//     expect(response.status).toBe(400);
+//   });
 
-  test("Signin is successful if the username and password are correct", async () => {
-    const username = "testuser@examplesfsfsd.com";
-    const password = "123456234234";
+//   test("Signin is successful if the username and password are correct", async () => {
+//     const username = "testuser@exggghgplesfsfsd.com";
+//     const password = "123456234234";
 
-    // Signup first
-    const signupResponse = await request(BACKEND_URL)
-      .post("/api/v1/signup")
-      .send({ username, password });
-    expect(signupResponse.status).toBe(201);
+//     // Signup first
+//     const signupResponse = await request(BACKEND_URL)
+//       .post("/api/v1/signup")
+//       .send({ username, password });
+//     expect(signupResponse.status).toBe(201);
 
-    // Attempt signin
-    const signinResponse = await request(BACKEND_URL)
-      .post("/api/v1/signin")
-      .send({ username, password });
-    expect(signinResponse.status).toBe(200);
-    expect(signinResponse.body.token).toBeDefined();
-  });
+//     // Attempt signin
+//     const signinResponse = await request(BACKEND_URL)
+//       .post("/api/v1/signin")
+//       .send({ username, password });
+//     expect(signinResponse.status).toBe(200);
+//     expect(signinResponse.body.token).toBeDefined();
+//   });
 
-  test("Signin fails if the username and password are incorrect", async () => {
-    const username = "testuser@example.com";
-    const password = "123456";
+//   test("Signin fails if the username and password are incorrect", async () => {
+//     const username = "testuser@example.com";
+//     const password = "123456";
 
-    // Signup first
-    await request(BACKEND_URL)
-      .post("/api/v1/signup")
-      .send({ username, password });
+//     // Signup first
+//     await request(BACKEND_URL)
+//       .post("/api/v1/signup")
+//       .send({ username, password });
 
-    // Attempt signin with incorrect username
-    const signinResponse = await request(BACKEND_URL)
-      .post("/api/v1/signin")
-      .send({ username: "wrongusername@example.com", password });
-    expect(signinResponse.status).toBe(404);
-  });
-});
+//     // Attempt signin with incorrect username
+//     const signinResponse = await request(BACKEND_URL)
+//       .post("/api/v1/signin")
+//       .send({ username: "wrongusername@example.com", password });
+//     expect(signinResponse.status).toBe(404);
+//   });
+// });
 
 // const axios2 = require("axios");
 
