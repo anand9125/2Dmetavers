@@ -86,12 +86,33 @@ router.post("/signin", async(req, res) => {
     }
     
 });
-router.get("/elements", (req, res) => {
-    
-});
-router.post("/avatars", (req, res) => {
+;
+router.get("/elements", async(req, res) => {
+    const elemets = await client.element.findMany()
+    res.json({
+        elemets: elemets.map(el=>({
+            id:el.id,
+            imageUrl:el.imageUrl,
+            width:el.width,
+            height:el.height,
+            static:el.static
+
+        }))
+    })
    
 });
+
+router.get("/avatars",async(req,res)=>{
+    const avatar = await client.avatar.findMany()
+    res.json({
+        avatar:avatar.map(av=>({
+          id:av.id,
+          name:av.name,
+          imageUrl:av.imageUrl  
+        }))
+    })
+})
+
 
 
 
