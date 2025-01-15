@@ -13,12 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 model User {
-  id       String  @id @unique @default(cuid())
-  username String  @unique
-  password String 
-  avatarId String ?
-  role     Role
-  space    Space[]
+  id        String  @id @unique @default(cuid())
+  username  String ?  
+  email     String  @unique
+  password  String 
+  avatarId  String ?
+  role      Role
+  space     Space[]
   avatar    Avatar? @relation(fields: [avatarId],references: [id])
 }
 
