@@ -5,11 +5,14 @@ import { useForm, SubmitHandler } from "react-hook-form"; // React Hook Form, a 
 import { SigninValidateForm } from '../Validation/Signup';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
+import { useState } from "react";
 import { useAuthStore } from '../store/useAuthStore';
 type FormValues = {
   username: string;
   email: string;
   password: string;
+  adminPassword : string;
+  
 };
 
 function Signin() {
@@ -24,7 +27,7 @@ function Signin() {
     watch, //A function that watches specified form inputs or the entire form for changes.
     formState: { errors } //An object that holds validation errors for the form Each field's error is available under errors.
 } = useForm<FormValues>(); //A hook provided by React Hook Form
-   
+   const[showInput,setShowInput]=useState(false)
     
      
 
@@ -45,11 +48,16 @@ function Signin() {
        toast.error("Google signin failed")
       }
      }
-
+     const handleClick: React.MouseEventHandler<HTMLAnchorElement>=()=>{
+       setShowInput(true)
+       if(showInput==true){
+        setShowInput(false)
+     }
+    }
   
   return (
     <div className='w-full   h-screen min-h-screen flex justify-center items-center bg-logbg'>
-    <div className='w-[450px]  mt-4 h-[500px]   bg-gray-100  text-black flex flex-col  items-center rounded-xl p-2'>
+    <div className='w-[450px]  mt-4 h-[540px]   bg-gray-100  text-black flex flex-col  items-center rounded-xl p-2'>
         <div className='flex gap-16 pt-6'>
             <img className=' animate-bounce' width={40} height={40} src="https://cdn.gather.town/v0/b/gather-town.appspot.com/o/images%2Favatars%2Favatar_19_dancing.png?alt=media&token=03c3e96f-9148-42f9-a667-e8aeeba6d558" alt="" />
             <img className=' animate-bounce' width={40} height={40} src="https://cdn.gather.town/v0/b/gather-town.appspot.com/o/images%2Favatars%2Favatar_29_dancing.png?alt=media&token=507cc40a-a280-4f83-9600-69836b64522b" alt="" />
@@ -73,7 +81,7 @@ function Signin() {
                             type="text"
                             name="email"
                             id="email"
-                            placeholder="Email your email address"
+                            placeholder="Enter your email address"
                             className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow"
                           />
                         </div>  
@@ -90,7 +98,20 @@ function Signin() {
                             placeholder="Enter your password"
                             className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow"
                          />
-                        </div> 
+                        </div>
+                        <div className="mx-auto w-1/2 pl-4 pt-3 flex flex-col">
+                          <a href="#" onClick={handleClick}>Are you an admin ?</a>
+                          </div>
+                          {showInput &&(
+                            <input
+                            {...register("adminPassword")}
+                            type="adminPassword"
+                            name="adminPassword"
+                            id="adminPassword"
+                            placeholder="Enter your admin password"
+                            className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow"
+                         />
+                          )}
                         <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-8 rounded focus:outline-none  mt-4">
                           {isSigningIn ? (
                            <>
@@ -109,8 +130,7 @@ function Signin() {
                          <FaGoogle />
                          <span>Signin with google</span>
                         </button>
-                       
-                        
+
                      </div>     
                 </form>
         <p className='pt-2 pl-7'>

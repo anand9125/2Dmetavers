@@ -31,8 +31,8 @@ function Signup() {
          const success=SignupValidateForm(data) 
          if(success==true){
              signUp(data)
-             console.log(data);
-             navigate('/dashboard')
+            
+            
          }
     };
     const handleGoogleSignIn =async()=>{
@@ -85,7 +85,7 @@ function Signup() {
                             type="text"
                             name="email"
                             id="email"
-                            placeholder="Email your email address"
+                            placeholder="Enter your email address"
                             className="shadow appearance-none border rounded w-full py-2 px-3 leading-tight focus:outline-none focus:shadow"
                         />
                         </div>  

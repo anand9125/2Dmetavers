@@ -18,7 +18,7 @@ model User {
   email     String  @unique
   password  String 
   avatarId  String ?
-  role      Role
+  role      Role ?
   space     Space[]
   avatar    Avatar? @relation(fields: [avatarId],references: [id])
 }

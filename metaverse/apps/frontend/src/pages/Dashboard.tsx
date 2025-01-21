@@ -1,9 +1,17 @@
-import React from 'react'
+import DashNavbar from "../Components/DashNavbar"
 
 function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <div><DashNavbar></DashNavbar></div>
   )
 }
 
 export default Dashboard
+
+
+
+
+
+
+
+

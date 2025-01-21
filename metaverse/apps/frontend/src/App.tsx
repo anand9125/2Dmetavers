@@ -8,6 +8,7 @@ import Signin from './pages/Signin'
 import Dashboard from './pages/Dashboard'
 import { Toaster } from'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
+import GameComponent from './pages/GameComponent'
 function App() {
     return (
      <><AuthProvider>
@@ -17,6 +18,7 @@ function App() {
          <Route path='/signup' element={<Signup></Signup>}></Route>
          <Route path='/signin' element={<Signin></Signin>}></Route>
          <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
+         <Route path='/text' element={<GameComponent/>}></Route>
        </Routes>
        <Toaster></Toaster>
       </BrowserRouter>

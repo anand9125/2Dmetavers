@@ -6,10 +6,12 @@ interface User{
     username : string,
     email : string,
     role : "Admin" | "User"
+   
 }
 
 
 interface AuthStore{
+    token: string | null
     authUser : User| null,
     isSigningUp : boolean,
     isSigningIn : boolean,
@@ -22,6 +24,7 @@ interface AuthStore{
 
 export const useAuthStore = create<AuthStore>((set)=>({
     authUser : null,
+    token:null,
     isSigningUp : false,
     isSigningIn: false,
     isCheckigning : true,
@@ -40,12 +43,40 @@ export const useAuthStore = create<AuthStore>((set)=>({
     signUp:async(data)=>{
         set({isSigningUp:true}) ;
         try{
-            const res = await axiosInstance.post("signup",data)
+            const res = await axiosInstance.post("/api/v1/signup",data)
+            console.log(res.data)
             toast.success("Successfully signed up")
-            console.log("Successfully")
-            set({authUser:res.data,isSigningUp:false})
+            // if(res.status==200){
+            //     window.location.href = "/dashboard";
+            // }
+            set({
+                authUser: {
+                    id: res.data.user.id,
+                    username: res.data.user.username,
+                    email: res.data.user.email,
+                    role: res.data.user.role,
+                },
+                token: res.data.token,
+                isSigningUp: false,
+            });
+            // if (res.status === 200) {
+            //     window.location.href = "/dashboard";
+            // }
+      
+            // console.log(state.authUser)
+
         }
-        catch(err){
+        catch(error:any){
+            if(error.status==409){
+                toast.error("user already signed up")
+            }   
+            if(error.status==500){
+                toast.error("Internal server error")
+            }
+            if(error.status==403){
+                toast.error("Invalid inputs")
+            }
+         
             toast.error("Error in signing up")
             set({isSigningUp:false})
         }
@@ -53,11 +84,37 @@ export const useAuthStore = create<AuthStore>((set)=>({
     signIn:async(data)=>{
         set({isSigningIn:true}) ;
         try{
-            const res = await axiosInstance.post("/auth/signin",data)
+            const res = await axiosInstance.post("/api/v1/signin",data)
             toast.success("Successfully signed in")
-            set({authUser:res.data,isSigningIn:false})
+            if(res.status==404){
+                toast.error("user not found please signup")
+            }
+            if(res.status==400){
+                toast.error("Invalid inputs")
+            }
+         
+            set({
+                authUser:res.data.user,
+                isSigningIn:false,
+                token:res.data.token
+            })
         }
-        catch(err){
+        catch(error:any){
+            if(error.status==403){
+                toast.error("Invalid credentials")
+            }
+            if(error.status==500){
+                toast.error("Internal server error")
+            }
+            if(error.status==401){
+                toast.error("Invalid Password")
+            }
+            if(error.status==404){
+                toast.error("user not found please signup")
+            }
+            if(error.status==406){
+                toast.error("Invalid Admin credentials")
+            }
             toast.error("Error in signing in")
             set({isSigningIn:false})
         }
