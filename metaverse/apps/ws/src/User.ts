@@ -25,6 +25,8 @@ export class User {  //User class represents a user connected via a WebSocket
          this.id =getRandomString(10);
          this.x=0;
          this.y=0;
+         this.ws=ws;
+         this.initHandlers();
     }
     initHandlers() {  //initHandlers method sets up a message event listener for the WebSocket (ws).becuse client will sent us two events 1st join the events and  2nd movements
         this.ws.on("message", async(data) => {
@@ -58,7 +60,8 @@ export class User {  //User class represents a user connected via a WebSocket
                             spawn:{
                                 x: this.x,
                                 y:this.y
-                            }
+                            },
+                            users: RoomManager.getInstance().rooms.get(spaceId)?.filter(x => x.id !== this.id)?.map((u) => ({id: u.id})) ?? []
                         }
                     })
 
@@ -100,7 +103,14 @@ export class User {  //User class represents a user connected via a WebSocket
         });
     }
     destroy(){
-        RoomManager.getInstance().removeUser(this,this.spaceId)
+        RoomManager.getInstance().broadcast({
+            type:"user left",
+            payload:{
+                userId:this.userId
+            }
+        },this, this.spaceId!)
+
+        RoomManager.getInstance().removeUser(this.spaceId!,this,)
     }
     send(payload:OutgoingMessage){
         this.ws.send(JSON.stringify(payload));  //send method sends a message (payload) to the client.

@@ -14,7 +14,13 @@ export class RoomManager {  //RoomManager class that manages users within differ
         }
         return this.instacne;
     }
-    public addUser(spaceId:string,user:User){  //addUser: A public method to add a User to a room identified by spaceId
+    public removeUser(spaceId:string,user:User){  //removeUser: A public method to remove a User from a room identified by spaceId
+     if(!this.rooms.has(spaceId)){
+        return;
+     }
+     this.rooms.set(spaceId,(this.rooms.get(spaceId)?.filter((u)=>u.id!=user.id )??[]));  //It filters the array of users for the given spaceId and removes the user if found. If no users remain for the spaceId, it removes the entry from the rooms map.  //The filter method creates a new array with all elements that pass the test implemented by the provided function.  //The arrow function u=>u.
+    }
+        public addUser(spaceId:string,user:User){  //addUser: A public method to add a User to a room identified by spaceId
         if(!this.rooms.has(spaceId)){  //First, it checks if the rooms map already has an entry for spaceId
             this.rooms.set(spaceId,[user]); //if not, it creates a new entry with the spaceId sets the value as an array containing the user.
         }
