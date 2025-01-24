@@ -2,8 +2,8 @@ import { Router } from "express";
 import { adminMiddleware } from "../middlewares/admin"
 import { CreateAvatarScheme, CreateElementScheme, CreateMapSchema, UpdateElementScheme } from "../types/index";
 import { PrismaClient } from "@prisma/client"
- export const adminRouter = Router()
  const client = new PrismaClient()
+ export const adminRouter = Router()
  import { Request,Response } from "express";
 
 export const postElements =async (req:Request, res:Response) => {

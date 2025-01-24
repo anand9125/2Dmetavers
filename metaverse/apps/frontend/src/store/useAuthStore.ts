@@ -15,20 +15,22 @@ interface AuthStore{
     authUser : User| null,
     isSigningUp : boolean,
     isSigningIn : boolean,
-    isCheckigning : boolean,
+    isCheckingingAuth : boolean,
     signUp: (data:any)=>void,
     signIn: (data:any)=>void,
     checkAuth: ()=>void,
+    signOut: () => Promise<void>;
 }
 
 
 export const useAuthStore = create<AuthStore>((set)=>({
-    authUser : null,
-    token:null,
+    authUser : JSON.parse(localStorage.getItem("authUser") || "null"),
+    token: localStorage.getItem("token"),
     isSigningUp : false,
     isSigningIn: false,
-    isCheckigning : true,
-
+    isCheckingingAuth : true,
+ 
+    
     checkAuth:async()=>{
         try{
             const res = await axiosInstance.get("/auth/check")
@@ -37,7 +39,7 @@ export const useAuthStore = create<AuthStore>((set)=>({
             toast.error("error in checkAuth")
             set({authUser:null})
         }finally{
-            set({isCheckigning:false})
+            set({isCheckingingAuth:false})
         }
     },
     signUp:async(data)=>{
@@ -46,25 +48,23 @@ export const useAuthStore = create<AuthStore>((set)=>({
             const res = await axiosInstance.post("/api/v1/signup",data)
             console.log(res.data)
             toast.success("Successfully signed up")
-            // if(res.status==200){
-            //     window.location.href = "/dashboard";
-            // }
-            set({
-                authUser: {
-                    id: res.data.user.id,
-                    username: res.data.user.username,
-                    email: res.data.user.email,
-                    role: res.data.user.role,
-                },
-                token: res.data.token,
+            const user = {
+                id: res.data.user.id,
+                username: res.data.user.username,
+                email: res.data.user.email,
+                role: res.data.user.role,
+              };
+              const token = res.data.token;
+              
+              // Save user and token to localStorage
+              localStorage.setItem("authUser", JSON.stringify(user));
+              localStorage.setItem("token", token);
+        
+              set({
+                authUser: user,
+                token,
                 isSigningUp: false,
-            });
-            // if (res.status === 200) {
-            //     window.location.href = "/dashboard";
-            // }
-      
-            // console.log(state.authUser)
-
+              });
         }
         catch(error:any){
             if(error.status==409){
@@ -93,13 +93,19 @@ export const useAuthStore = create<AuthStore>((set)=>({
                 toast.error("Invalid inputs")
             }
          
-            set({
-                authUser:res.data.user,
-                isSigningIn:false,
-                token:res.data.token
-            })
-        }
-        catch(error:any){
+            const user = {
+                id: res.data.user.id,
+                username: res.data.user.username,
+                email: res.data.user.email,
+                role: res.data.user.role,
+              };
+              const token = res.data.token;
+              
+              // Save user and token to localStorage
+              localStorage.setItem("authUser", JSON.stringify(user));
+              localStorage.setItem("token", token);
+            }
+          catch(error:any){
             if(error.status==403){
                 toast.error("Invalid credentials")
             }
@@ -119,17 +125,19 @@ export const useAuthStore = create<AuthStore>((set)=>({
             set({isSigningIn:false})
         }
     },
-    SignOut:async()=>{
-    try{
-       await axiosInstance.get("/auth/logout")
-        set({authUser:null})
-       toast.success("Successfully signed out")
-    }
-     catch(err){
-    toast.error("error while logout")
-
-    }
-    }
+    signOut: async (): Promise<void> => {
+        try {
+          localStorage.removeItem("authUser");
+          localStorage.removeItem("token");
+          set({
+            authUser: null,
+            token: null,
+          });
+        } catch (err) {
+          toast.error("error while logout");
+        }
+      }
+      
 
 
 }))

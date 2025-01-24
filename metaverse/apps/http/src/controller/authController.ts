@@ -10,6 +10,7 @@ import jwt from "jsonwebtoken"
 const client = new PrismaClient()
 
 export const userSignup =async (req:Request, res:Response) => {
+    
         
     const parseData = SigupScheme.safeParse(req.body)       
     if(!parseData.success){

@@ -1,7 +1,7 @@
 import { SlCalender } from "react-icons/sl";
 import { TbSquareRoundedPlusFilled } from "react-icons/tb";
 import { BsStars } from "react-icons/bs";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useEffect } from "react";
 import { FaSignOutAlt } from "react-icons/fa";
@@ -9,8 +9,9 @@ import { MdEdit } from "react-icons/md";
 import { Button4 } from "./Button";
 function DashNavbar() {
   const [hover, setHover] = useState(false);
-  const{authUser} = useAuthStore()
+  const{authUser,signOut} = useAuthStore()
   const [EditCh, setEditCh] = useState(false);
+  
   
   
 useEffect(() => {
@@ -21,9 +22,12 @@ useEffect(() => {
     }
 
     function createSpace(){
-
+      
     }
-
+    function handleSignOut(){
+       signOut()
+    }
+  
 
   return (
     <div
@@ -60,42 +64,42 @@ useEffect(() => {
             className="w-6 h-6 rounded-full object-cover"
         />
         <p className="text-base font-semibold truncate">
-          {authUser?.username?.slice(0, 15) || "Anand Chuah"}
+          {authUser?.username?.slice(0, 11) || "Anand Chuah"}
         </p>
       
         
         {hover && (
-          <div
-            className=" absolute top-[120%] left-[0%] w-[180px] flex flex-col gap-2  shadow-lg p-4 rounded-xl z-10"
-            style={{ backgroundColor: "rgb(84, 92, 143)" }}
-          >
-            <div className="flex flex-col  text-white h-[50px]">
-              <div className="w-full flex justify-between items-center">
-                <p>{authUser?.username}</p>
-                <MdEdit
-                  className="w-[25px] h-[25px] bg-[#3a3dab] p-1 rounded-xl cursor-pointer"
-                  onClick={() => {
-                    setEditCh((prev) => !prev);
-                  }}
-                />
-              </div>
-              <p className="">{authUser?.username}</p>
-            </div>
-            <div className="h-[2px] rounded-xl  bg-white"></div>
-            <h1
-              className="cursor-pointer text-WHITE  hover:font-semibold"
-              onClick={() => alert("Edit Name Clicked")}
-            >
-              Edit Avatar
-            </h1>
-            <h1
-              className="flex items-center gap-2 text-black hover:font-semibold cursor-pointer transition-all duration-200"
-              >
-                <FaSignOutAlt className="w-4 h-4" />
-                <span>Sign Out</span>
-            </h1>
-          </div>
-        )}
+                <div
+                  className="absolute top-[120%] left-[0%] w-[180px] flex flex-col gap-2 shadow-lg p-4 rounded-xl z-10"
+                  style={{ backgroundColor: "rgb(84, 92, 143)" }}
+                >
+                  <div className="flex flex-col text-white">
+                    <div className="w-full flex justify-between items-center">
+                      <p className="truncate hover:font-semibold">{authUser?.username}</p>
+                      <MdEdit
+                        className="w-[25px] h-[25px] bg-[#3a3dab] p-1 rounded-xl cursor-pointer"
+                        onClick={() => {
+                          setEditCh((prev) => !prev);
+                        }}
+                      />
+                    </div>
+                    <p className="break-words hover:font-semibold">{authUser?.email}</p>
+                  </div>
+                  <div className="h-[2px] rounded-xl bg-white"></div>
+                  <h1
+                    className="cursor-pointer text-white hover:font-semibold"
+                    onClick={() => alert("Edit Name Clicked")}
+                  >
+                    Edit Avatar
+                  </h1>
+                  <h1
+                    className="flex items-center gap-2 text-black hover:font-semibold cursor-pointer transition-all duration-200"
+                  >
+                    <FaSignOutAlt className="w-4 h-4" />
+                    <span onClick={signOut}>Logout</span>
+                  </h1>
+                </div>
+              )}
         </div>
         
         </div>

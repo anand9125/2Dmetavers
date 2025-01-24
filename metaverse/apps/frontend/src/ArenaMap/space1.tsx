@@ -172,9 +172,9 @@ export const useGame = () => {
     playerImage.src = "/assets/playerDown.png";
 
     console.log(playerDownImage)
-console.log(playerUpImage)
-console.log(playerLeftImage)
-console.log(playerRightImage)
+    console.log(playerUpImage)
+    console.log(playerLeftImage)
+    console.log(playerRightImage)
     console.log(forgroundImage)
     const player = new Sprite({
       position: {
