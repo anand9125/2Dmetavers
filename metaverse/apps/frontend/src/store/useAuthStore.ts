@@ -77,7 +77,7 @@ export const useAuthStore = create<AuthStore>((set)=>({
                 toast.error("Invalid inputs")
             }
          
-            toast.error("Error in signing up")
+            toast.error("Error in signing up" ,error)
             set({isSigningUp:false})
         }
     },

@@ -60,6 +60,7 @@ export const postAvatar =  async (req:Request, res:Response) => {
 
 export const postMap = async(req:Request,res:Response)=>{
     const parseData = CreateMapSchema.safeParse(req.body)
+    console.log("hii ha")
     if(!parseData.success){
         res.status(400).json({
             message:"Validation failed"
@@ -72,17 +73,18 @@ export const postMap = async(req:Request,res:Response)=>{
             width: parseInt(parseData.data.dimensions.split("x")[0]),
             height: parseInt(parseData.data.dimensions.split("x")[1]),
             thumbnail: parseData.data.thumbnail,
-            mapElements: {
-                create: parseData.data.defaultElements.map(e => ({
-                    elementId: e.elementId,
-                    x: e.x,
-                    y: e.y
-                }))
-            }
+            // mapElements: {
+            //     create: parseData.data.defaultElements.map(e => ({
+            //         elementId: e.elementId,
+            //         x: e.x,
+            //         y: e.y
+            //     }))
+            // }
         }
     })
-
     res.json({
         id: map.id
     })
+
+    
 }

@@ -22,7 +22,8 @@ function App() {
          <Route path="/" element={<Home />} />
          <Route path='/signup' element={!authUser?<Signup></Signup>: <Navigate to="/dashboard" />}></Route>
          <Route path='/signin' element={!authUser?<Signin></Signin>:<Navigate to="/dashboard"></Navigate>}></Route>
-         <Route path='/dashboard' element={authUser?<Dashboard></Dashboard>:<Navigate to ="/signup"></Navigate>}></Route>
+         {/* <Route path='/dashboard' element={authUser?<Dashboard></Dashboard>:<Navigate to ="/signup"></Navigate>}></Route> */}
+         <Route path='/dashboard' element={<Dashboard></Dashboard>}></Route>
          <Route path='/test' element={<GameComponent/>}></Route>
          <Route path='/test2' element={<GameComponent2/>}></Route>
        </Routes>

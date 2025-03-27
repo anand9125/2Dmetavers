@@ -121,14 +121,14 @@ export const useMapCreation = () => {
       }));
 
       try {
-      const response = await fetch("/api/saveMap", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    name: "Test Map",
-    dimensions: "1400x900",
-    thumbnail: "/assets/thumbnail.png",
-    defaultElements: [
+      const response = await fetch("http://localhost:3000/api/v1/admin/map", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+      name: "Test Map",
+     dimensions: "1400x900",
+     thumbnail: "/assets/thumbnail.png",
+     defaultElements: [
       { elementId: "1", x: 100, y: 200 },
       { elementId: "2", x: 300, y: 400 }
     ]
