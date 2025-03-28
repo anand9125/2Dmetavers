@@ -8,11 +8,11 @@ import axios from "axios";
 import { spaceState } from "../store/spaceAtom";
 import { toast } from "sonner";
 import { RiDeleteBin7Line } from "react-icons/ri";
-import Button from "./ui/Button";
+import Button5 from "../Components/Button";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
 
-function Dashboard() {
+function Dash() {
   const {authUser} = useAuthStore();
   const setUser = useSetRecoilState(userState);
   const setAvatar = useSetRecoilState(avatarState);
@@ -26,10 +26,10 @@ function Dashboard() {
     const fetch = async () => {
       const token = localStorage.getItem("token");
 
-      if (!token) {
-        navigate("/");
-        return;
-      }
+      // if (!token) {
+      //   navigate("/");
+      //   return;
+      // }
 
       try {
         const res = await axios.get(`${BACKEND_URL}/user/metadata`, {
@@ -133,14 +133,14 @@ function Dashboard() {
           Are you sure you want to delete this Space?
         </p>
         <div className="w-[50%] flex justify-between items-center mt-4">
-          <Button
+          <Button5
             text="Cancel"
             size="xl"
             color="black"
             classname="cursor-pointer"
             onClick={handleCancel}
           />
-          <Button
+          <Button5
             text="Delete"
             size="xl"
             color="black"
@@ -152,10 +152,10 @@ function Dashboard() {
     </>
   )}
 </div>
-);
+
 }
 
-export default Dashboard
+export default Dash
 
 
 

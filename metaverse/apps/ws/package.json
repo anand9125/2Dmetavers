@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+   "@repo/db": "*",
   "ws": "^8.5.0"
 }
 ,

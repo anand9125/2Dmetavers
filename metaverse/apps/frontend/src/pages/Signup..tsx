@@ -3,7 +3,6 @@ import { FaGoogle } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom'
 import { useForm, SubmitHandler } from "react-hook-form"; // React Hook Form, a popular library for handling forms in React.
 import { SignupValidateForm } from '../Validation/Signup';
-import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import { useAuthStore } from '../store/useAuthStore';
 type FormValues = {
@@ -13,7 +12,6 @@ type FormValues = {
 };
 function Signup() {
   const navigate =useNavigate()
-  const {signInWithGoogle  } = useAuth(); 
   const{ signUp,isSigningUp}= useAuthStore()
 
 
@@ -37,7 +35,6 @@ function Signup() {
     };
     const handleGoogleSignIn =async()=>{
       try{
-       await signInWithGoogle()
        toast.success("Signup with google successfully")
       }
       catch(e){

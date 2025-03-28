@@ -27,6 +27,56 @@ import { userMiddleware } from "../../middlewares/user";
         res.status(400).json({message: "Internal server error"})
     }
 })
+
+userRouter.get("/metadata", userMiddleware, async (req, res) => {
+    const user = await client.user.findUnique({
+      where: {
+        id: req.userId,
+      },
+    });
+    console.log("user", user);
+  
+    if (!user) {
+      res.status(404).json({ message: "User not found 2" });
+      return;
+    }
+    if(user.avatarId === null){
+        res.json({
+            user,
+            avatar: null
+        })
+        return
+    }
+  
+    const avatar = await client.avatar.findFirst({
+      where: { id: user.avatarId },
+    });
+    console.log("avatar", avatar);
+  
+    res.json({
+      user,
+      avatar,
+    });
+  });
+  
+userRouter.post("/:UserId", userMiddleware, async (req, res) => {
+    const user = await client.user.findUnique({
+      where: {
+        id: req.params.UserId,
+      },
+    });
+    console.log("user", user);
+  
+    if (!user) {
+      res.status(404).json({ message: "User not found 1" });
+      return;
+    }
+  
+    res.json({
+      user,
+    });
+});
+
 userRouter.get("/metadata/bulk", async (req, res) => {
     const userIdString = (req.query.ids ?? "[]") as string;
     const userIds = (userIdString).slice(1, userIdString?.length - 1).split(",");
@@ -49,6 +99,37 @@ userRouter.get("/metadata/bulk", async (req, res) => {
         }))
     })
 })
+userRouter.post("/avatar", userMiddleware, async (req, res) => {
+    const avatarId = req.body.avatarId;
+    console.log("got kbskvksd", avatarId);
+    try {
+      const user = await client.user.update({
+        where: {
+          id: req.userId,
+        },
+        data: {
+          avatarId: avatarId,
+        },
+        select: {
+          avatarId: true,
+        },
+      });
+      console.log(user);
+  
+      const avatar = await client.avatar.findFirst({
+        where: {
+          id: avatarId,
+        },
+      });
+  
+      res.json({
+        avatar,
+      });
+    } catch (error) {
+      res.json(error);
+    }
+  });
+  
   
  //req.query.ids: This accesses the query parameter ids from the request URL
  //?? "[]": The nullish coalescing operator (??) checks if req.query.ids is null or undefined.

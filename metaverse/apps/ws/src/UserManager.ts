@@ -1,4 +1,4 @@
-
+import WebSocket from "ws";
 interface User {
     id: string;
     userId: string;
@@ -80,7 +80,7 @@ export class UserManager{
         return Array.from(this.users.values())
         .find(u => u.userId === userId && u.spaceId === spaceId);
     }
-    broadcastToSpace(spaceId:string,message:string,exclude?:string){
+    broadcastToSpace(spaceId:string,message:any,exclude?:string){
         const users = Array.from(this.users.values())
             .filter(u => u.spaceId === spaceId && u.id !== exclude);
         
