@@ -440,8 +440,8 @@ export const SpaceCreation = ({ onClick }: { onClick: () => void }) => {
 
   useEffect(() => {
     const fetchMaps = async () => {
-      const res = await axios.get(`${BACKEND_URL}/maps`);
-      console.log(res.data);
+      const res = await axios.get(`${BACKEND_URL}/map`);
+     
       setMaps(res.data.maps);
       setSelectedMap(res.data.maps[0]);
     };
@@ -449,7 +449,10 @@ export const SpaceCreation = ({ onClick }: { onClick: () => void }) => {
   }, []);
 
   const handleCreateSpace = async () => {
-    console.log(name, dimensions, maps[selected]);
+    console.log(selectedMap,"hii i am data of selectedmap");
+    console.log(maps[selected],"hii i am data of maps");
+    console.log(name, dimensions, maps[selected], "hii i am data of creaee tpe");
+    
     if (name === "") {
       toast("Please enter a name for the space");
       return;
@@ -459,11 +462,10 @@ export const SpaceCreation = ({ onClick }: { onClick: () => void }) => {
       setLoading(true);
 
       const newSpace = await axios.post(
-        `${BACKEND_URL}/space/`,
+        `${BACKEND_URL}/space/create-space`,
         {
           name,
           dimensions,
-          mapId: maps[selected].id,
           thumbnail: maps[selected].thumbnail,
         },
         {
@@ -472,7 +474,7 @@ export const SpaceCreation = ({ onClick }: { onClick: () => void }) => {
           },
         }
       );
-      // @ts-expect-error kjbvghchjnjk
+      
       setSpaces((prevSpaces) => [...prevSpaces, newSpace.data.space]);
       setLoading(false);
       console.log(newSpace.data);
@@ -482,7 +484,7 @@ export const SpaceCreation = ({ onClick }: { onClick: () => void }) => {
       setLoading(false);
       console.error("Space creation failed", error);
     }
-  };
+   };
   useEffect(() => {
     console.log(maps[selected]);
   }, [selected]);
@@ -543,18 +545,6 @@ export const SpaceCreation = ({ onClick }: { onClick: () => void }) => {
                         <span className="">🏙️</span>
                         <p>Library</p>
                       </div>
-                      {/* <div onClick={()=> setSelected(1)}  className={`cursor-pointer col-span-6 w-[120px] h-[80px] flex justify-center items-center bg-[#545c8f] border border-gray-600 rounded-xl ${selected ===1 && "border-2 border-green-600"}`}>
-                         <span className="">🏙️</span>
-                          <p>Courtyard</p>  
-                         </div>
-                         <div onClick={()=> setSelected(2)}  className={`cursor-pointer col-span-6 w-[120px] h-[80px] flex justify-center items-center bg-[#545c8f] border border-gray-600 rounded-xl ${selected ===2 && "border-2 border-green-600"}`}>
-                         <span className="">🏠</span>
-                          <p>Courtyard</p>  
-                         </div>
-                         <div onClick={()=> setSelected(3)}  className={`cursor-pointer col-span-6 w-[120px] h-[80px] flex justify-center items-center bg-[#545c8f] border border-gray-600 rounded-xl ${selected ===3 && "border-2 border-green-600"}`}>
-                         <span className="">🚀</span>
-                          <p>Courtyard</p>  
-                         </div> */}
                     </div>
                   </div>
                 </div>

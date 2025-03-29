@@ -1,5 +1,5 @@
 import { NextFunction,Request,Response } from "express"
-import { JWT_PASSWORD } from "../config"
+import { JWT_PASSWORD, JWT_SECRET } from "../config"
 import jwt from "jsonwebtoken"
 interface Decodetoken{
     role:string;
@@ -23,7 +23,7 @@ export const adminMiddleware = (req :Request,res :Response,next:NextFunction)=>{
         })
         return;
     }
-    try{  const decode = jwt.verify(token,JWT_PASSWORD) as Decodetoken
+    try{  const decode = jwt.verify(token,JWT_SECRET) as Decodetoken
         if(decode.role != "Admin"){
             res.status(403).json({
                 message:"Unauthorized"

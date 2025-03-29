@@ -1,5 +1,4 @@
 import DashNavbar from "../Components/DashNavbar"
-import { useAuthStore } from "../store/useAuthStore"
 import { useEffect, useState } from "react";
 
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -11,9 +10,9 @@ import { RiDeleteBin7Line } from "react-icons/ri";
 import Button5 from "../Components/Button";
 import { useNavigate } from "react-router-dom";
 import { BACKEND_URL } from "../config";
+import DashNav from "../Components/DashNavbar";
 
 function Dash() {
-  const {authUser} = useAuthStore();
   const setUser = useSetRecoilState(userState);
   const setAvatar = useSetRecoilState(avatarState);
   const [spaces, setSpaces] = useRecoilState(spaceState);
@@ -61,8 +60,9 @@ function Dash() {
   };
 
   const handleDelete = async (spaceId: string) => {
+    console.log(selectedSpaceid)
     try {
-      await axios.delete(`${BACKEND_URL}/space/${spaceId}`, {
+      await axios.delete(`${BACKEND_URL}/space/delete/${spaceId}`, {
         headers: {
           Authorization: localStorage.getItem("token") || "",
         },
@@ -76,9 +76,8 @@ function Dash() {
     }
   };
 
-  console.log(authUser)
-  return <div className="bg-Hero w-full h-screen bg-[#282d4e] text-white">
-  <DashNavbar />
+  return   <div className="bg-Hero w-full h-screen bg-[#282d4e] text-white">
+  <DashNav />
   {/* Content */}
   <div className="w-[100%] h-[80%] p-8">
     {loading ? (
@@ -119,7 +118,7 @@ function Dash() {
     )}
   </div>
 
-  {DeleteModal && (
+{DeleteModal && (
     <>
       <div className="fixed top-0 left-0 w-full h-full bg-black opacity-50 z-20"></div>
       <div

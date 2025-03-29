@@ -28,7 +28,7 @@ const DashNav = () => {
   const [loading, setLoading] = useState(false);
   const [showCreateElement, setShowCreateElement] = useState(false);
   const navigate = useNavigate();
-  const [showMapCreate, setShowMapCreate] = useState(true);
+  const [showMapCreate, setShowMapCreate] = useState(false);
   const [createSpace, setCreateSpace] = useState(false);
   const [openJoinSpace, setOpenJoinSpace] = useState(false);
   const [allAvatars, setAvatars] = useState<Avatar[]>() as any;
@@ -38,9 +38,9 @@ const DashNav = () => {
   useEffect(() => {
     const fetch = async () => {
       const token = await localStorage.getItem("token");
-      // if (!token) {
-      //   navigate("/signIn");
-      // }
+      if (!token) {
+        navigate("/signin");
+      }
 
       const avatars = await axios.get(`${BACKEND_URL}/avatars`);
       setAvatars(avatars.data.avatars);
@@ -133,7 +133,7 @@ const DashNav = () => {
           className="w-[70%] p-2 flex justify-center  items-center gap-2 hover:bg-gray-200 p-1 rounded-xl hover:text-black cursor-pointer"
         >
           <img
-            src={avatar.imageUrl}
+            src={avatar?.imageUrl}
             alt="User Avatar"
             className="rounded-full w-[30px] h-[30px] "
           />
