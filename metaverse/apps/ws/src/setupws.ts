@@ -101,6 +101,13 @@ function calulateSpawnPosition(spaceId:string,space:any):{x:number,y:number}{
 
 function setupwss(wss:WebSocketServer){
     wss.on("connection",async function(ws:WebSocket){
+
+        ws.on('message', function message(data) {
+            console.log('received: %s', data);
+          });
+        
+          ws.send('something');
+        
         ws.on("message",async function(data){
             console.log("hii i am reched")
             try{
@@ -228,7 +235,7 @@ function setupwss(wss:WebSocketServer){
                             peerId,
                             isGuest:isGuest||false
                         }
-
+                         console.log("user added succesfully")
                         UserManager.getInstance().addUser(user);
 
                         const userList = UserManager.getInstance().getUsersInSpace(spaceId);

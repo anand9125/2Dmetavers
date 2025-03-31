@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL } from "../../config";
 import { useSetRecoilState } from "recoil";
-import { userState } from "../store/userAtom";
+import { userState } from "../../store/userAtom";
 
 const SignIn = () => {
   const setUser = useSetRecoilState(userState);

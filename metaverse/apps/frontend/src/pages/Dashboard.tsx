@@ -1,6 +1,4 @@
-import DashNavbar from "../Components/DashNavbar"
 import { useEffect, useState } from "react";
-
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { avatarState, userState } from "../store/userAtom";
 import axios from "axios";
@@ -24,12 +22,10 @@ function Dash() {
   useEffect(() => {
     const fetch = async () => {
       const token = localStorage.getItem("token");
-
-      // if (!token) {
-      //   navigate("/");
-      //   return;
-      // }
-
+      if (!token) {
+        navigate("/");
+        return;
+      }
       try {
         const res = await axios.get(`${BACKEND_URL}/user/metadata`, {
           headers: { authorization: token },
@@ -67,7 +63,7 @@ function Dash() {
           Authorization: localStorage.getItem("token") || "",
         },
       });
-      setSpaces(spaces.filter((s) => s.id !== spaceId));
+      setSpaces(spaces.filter((s:any) => s.id !== spaceId));
       toast("Space deleted successfully");
       setDeleteModal(false);
       setSelectedSpaceid("");
@@ -86,7 +82,7 @@ function Dash() {
       </div>
     ) : spaces.length > 0 ? (
       <div className="grid grid-cols-12 justify-center gap-3">
-        {spaces.map((space) => (
+        {spaces.map((space:any) => (
           <div
             key={space?.id}
             className="col-span-12 md:col-span-6 lg:col-span-4 h-[300px] p-2"

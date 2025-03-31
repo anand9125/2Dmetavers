@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { collisions } from '../Data/collisions';
+import { collisions } from '../lib/Data/collisions';
 interface Position {
   x: number;
   y: number;
@@ -409,4 +409,4 @@ console.log(player.sprites)
          }
     
          })
-         }, [])}
+}, [])}

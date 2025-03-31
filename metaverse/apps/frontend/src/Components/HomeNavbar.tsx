@@ -1,5 +1,5 @@
 
-import {Button,Button2 } from './Button'
+import {Button} from './Button'
 import { useNavigate } from 'react-router-dom';
 
  function HomeNavbar() {
@@ -21,7 +21,7 @@ import { useNavigate } from 'react-router-dom';
         <div className='flex justify-end items-center'>
         <div className=" flex gap-4 pr-4 lg:mr-16">
                <Button onClick={handleGetStarted} label="Get started"></Button>
-               <Button2 onClick={handleSignUp} label='Sign in'></Button2>
+               <Button onClick={handleSignUp} label='Sign in'></Button>
             </div>
         </div>
     </div>

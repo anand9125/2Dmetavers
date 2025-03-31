@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import { BACKEND_URL } from "../config";
+import { BACKEND_URL } from "../../config";
 
 const SignUp = () => {
   const [show, setShow] = useState(false);

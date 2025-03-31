@@ -1,3 +1,3 @@
 export const JWT_PASSWORD = "secretpassword";
 
-export const JWT_SECRET = "secret";
+export const JWT_SECRET = "secretpassword";
