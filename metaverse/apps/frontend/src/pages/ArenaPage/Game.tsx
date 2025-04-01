@@ -324,7 +324,7 @@ const MultiplayerGame: React.FC = () => {
 
       game.movables = [game.background, ...game.boundaries, game.foreground];
 
-      // Handle WebSocket events
+    
       webSocketService.onUserJoined((user) => {  // registers a function that will be triggered when a user joins.
         console.log("User joined game:", user);
         const otherPlayerSprite = new Sprite({
